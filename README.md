@@ -1,0 +1,7 @@
+- React
+- TypeScript
+- React Router
+- Redux
+- React testing Library
+- Cypress
+- TMDB API
