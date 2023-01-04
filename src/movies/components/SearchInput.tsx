@@ -27,15 +27,22 @@ const Wrapper = styled('div')({
   paddingLeft: 8,
   paddingRight: 8,
   borderRadius: 4,
+  width: '100%',
+  maxWidth: 210,
 
   '& .search-icon': {
     cursor: 'text',
     width: 20,
     height: 20,
   },
+
+  '@media screen and (min-width: 768px)': {
+    maxWidth: 310,
+  },
 });
 
 const Input = styled('input')({
   border: 'none',
   outline: 'none',
+  width: '100%',
 });

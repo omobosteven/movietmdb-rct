@@ -1,6 +1,21 @@
 import React from 'react';
-import { Home } from './home/pages/Home';
+import { Movies } from './movies/pages/Movies';
+import { MovieDetails } from './movies/pages/MovieDetails';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { Error } from './error/Error';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Movies />,
+    errorElement: <Error />,
+  },
+  {
+    path: 'movies/:movieId',
+    element: <MovieDetails />,
+  },
+]);
 
 export const App = () => {
-  return <Home />;
+  return <RouterProvider router={router} />;
 };

@@ -5,11 +5,22 @@ import { SearchInput } from './SearchInput';
 
 // &uarr; arrow up
 // &darr; arrow down
-export const Actions = () => {
+
+interface ActionsProps {
+  search: string;
+  onChangeSearch: (value: string) => void;
+}
+
+export const Actions = ({ search, onChangeSearch }: ActionsProps) => {
+  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const { value } = e.currentTarget;
+    onChangeSearch(value);
+  };
+
   return (
     <ActionItems>
       <Button>Sort &uarr;</Button>
-      <SearchInput />
+      <SearchInput value={search} onChange={handleChange} />
     </ActionItems>
   );
 };

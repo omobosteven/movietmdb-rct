@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import { PageTitle } from './PageTitle';
 
 export const Banner = () => {
   return (
     <Header>
-      <h1 className="title">Movies DB</h1>
+      <PageTitle>Movies DB</PageTitle>
       <h3 className="sub-title">Yet another movies database.</h3>
     </Header>
   );
@@ -12,13 +13,7 @@ export const Banner = () => {
 
 const Header = styled('header')({
   backgroundColor: '#ebebeb',
-  padding: '37px 0 50px',
-
-  '& .title': {
-    marginBottom: 24,
-    fontWeight: 400,
-    color: '#010101',
-  },
+  padding: '37px 5% 50px',
 
   '& .sub-title': {
     fontWeight: 400,
