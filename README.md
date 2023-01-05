@@ -1,7 +1,9 @@
 - React
+- Vite
 - TypeScript
 - React Router
-- Redux
+- Redux*
 - React testing Library
+- Vitest
 - Cypress
 - TMDB API
