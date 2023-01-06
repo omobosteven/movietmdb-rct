@@ -8,19 +8,14 @@ import { SearchInput } from './SearchInput';
 
 interface ActionsProps {
   search: string;
-  onChangeSearch: (value: string) => void;
+  onSearchChange: (value: string) => void;
 }
 
-export const Actions = ({ search, onChangeSearch }: ActionsProps) => {
-  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
-    const { value } = e.currentTarget;
-    onChangeSearch(value);
-  };
-
+export const Actions = ({ search, onSearchChange }: ActionsProps) => {
   return (
     <ActionItems>
       <Button>Sort &uarr;</Button>
-      <SearchInput value={search} onChange={handleChange} />
+      <SearchInput value={search} onChange={onSearchChange} />
     </ActionItems>
   );
 };
