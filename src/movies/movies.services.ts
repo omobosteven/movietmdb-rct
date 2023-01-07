@@ -80,8 +80,6 @@ export interface Movie {
 export interface MovieDetail extends Movie {
   overview: string | null;
   status: string;
-
   website: string | null;
-
   backdrop: string;
 }
