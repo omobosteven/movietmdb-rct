@@ -4,7 +4,7 @@ import { MovieDetails } from './movies/pages/MovieDetails';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Error } from './error/Error';
 
-const router = createBrowserRouter([
+export const routes = [
   {
     path: '/',
     element: <Movies />,
@@ -14,7 +14,9 @@ const router = createBrowserRouter([
     path: 'movies/:movieId',
     element: <MovieDetails />,
   },
-]);
+];
+
+const router = createBrowserRouter(routes);
 
 export const App = () => {
   return <RouterProvider router={router} />;

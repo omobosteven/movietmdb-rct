@@ -31,4 +31,22 @@ export const handlers = [
       })
     );
   }),
+
+  rest.get('https://api.themoviedb.org/3/movie/:movieId', (req, res, ctx) => {
+    const { movieId } = req.params;
+
+    return res(
+      ctx.json({
+        backdrop_path: '/image.jpg',
+        id: movieId,
+        original_title: 'a good: right',
+        overview: 'lorem some text here now',
+        title: 'a good',
+        poster_path: '/image.jpg',
+        vote_average: 8,
+        status: 'released',
+        homepage: 'https://movie.com',
+      })
+    );
+  }),
 ];

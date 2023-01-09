@@ -1,14 +1,13 @@
 import React from 'react';
 import {
-  renderWithRouter,
   screen,
+  renderWithRoute,
 } from '../../test-utils/testing-library-utils';
-import { Movies } from '../pages/Movies';
 import userEvent from '@testing-library/user-event';
 
 describe('<Movies />', () => {
   test('movies component renders correctly', async () => {
-    renderWithRouter(<Movies />);
+    renderWithRoute();
 
     const movieItems = await screen.findAllByRole('listitem');
     const title1 = screen.getByRole('heading', { name: /a good/i });
@@ -20,7 +19,7 @@ describe('<Movies />', () => {
   });
 
   test('search movies returns correct result', async () => {
-    renderWithRouter(<Movies />);
+    renderWithRoute();
 
     const movieItems = await screen.findAllByRole('listitem');
     const title1 = screen.getByRole('heading', { name: /a good/i });
