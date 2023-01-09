@@ -1,5 +1,4 @@
 import React from 'react';
-import { Rating, ThinStar } from '@smastrom/react-rating';
 import styled from 'styled-components';
 import { pxToRem } from '../../utils/pxToRem';
 
@@ -8,22 +7,22 @@ interface StarRatingProps {
   showLabel?: boolean;
 }
 
-const ratingStyles = {
-  itemShapes: ThinStar,
-  activeFillColor: '#878787',
-  inactiveFillColor: '#cbcbcb',
-};
+// Star solid	&#9733;
 
 export const StarRating = ({ rating, showLabel }: StarRatingProps) => {
   const rate = parseFloat(rating.toFixed(1));
   return (
     <Wrapper>
-      <Rating
-        value={rate}
-        readOnly
-        itemStyles={ratingStyles}
-        className="rating"
-      />
+      <Rating>
+        {[...new Array(5)].map((item, index) => (
+          <span
+            key={index}
+            className={`star${Math.round(rate) > index ? ' star-filled' : ''}`}
+          >
+            &#9733;
+          </span>
+        ))}
+      </Rating>
       <p className="text">{showLabel && `${rate}/5`}</p>
     </Wrapper>
   );
@@ -31,7 +30,7 @@ export const StarRating = ({ rating, showLabel }: StarRatingProps) => {
 
 const Wrapper = styled('div')({
   display: 'flex',
-  columnGap: 8,
+  alignItems: 'center',
 
   '& .rating': {
     maxWidth: 100,
@@ -39,8 +38,20 @@ const Wrapper = styled('div')({
 
   '& .text': {
     fontWeight: 600,
-    fontSize: pxToRem(15),
+    fontSize: pxToRem(16),
+    marginLeft: 5,
+    lineHeight: 1,
   },
 });
 
-// TODO: implement star rating component
+const Rating = styled('div')({
+  '& .star': {
+    color: '#cbcbcb',
+    fontSize: pxToRem(22),
+    marginRight: 5,
+
+    '&-filled': {
+      color: '#878787',
+    },
+  },
+});

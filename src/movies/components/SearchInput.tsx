@@ -2,18 +2,26 @@ import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as SearchIcon } from '../../assets/search.svg';
 
-interface SearchInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface SearchInputProps
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
   value: string;
-  onChange: React.FormEventHandler<HTMLInputElement>;
+  onChange: (value: string) => void;
 }
 export const SearchInput = ({ value, onChange }: SearchInputProps) => {
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.currentTarget;
+    onChange(value);
+  };
+
   return (
     <Wrapper>
       <Input
         placeholder="Search for a movie"
+        id="search"
+        name="search"
         type="search"
         value={value}
-        onChange={onChange}
+        onChange={handleOnChange}
       />
       <SearchIcon className="search-icon" />
     </Wrapper>

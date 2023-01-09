@@ -33,7 +33,7 @@ export const Movies = () => {
     <section>
       <Banner />
       <Container>
-        <Actions search={searchQuery} onChangeSearch={handleSetSearchQuery} />
+        <Actions search={searchQuery} onSearchChange={handleSetSearchQuery} />
         <MovieList movies={searchQuery ? filteredMovies : movies} />
       </Container>
     </section>

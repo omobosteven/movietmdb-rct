@@ -9,10 +9,12 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: './src/setupTests.ts',
+    setupFiles: './src/test-utils/setupTests.ts',
     coverage: {
+      provider: 'istanbul',
       reporter: ['text', 'html'],
-      exclude: ['node_modules/', './src/setupTests.ts'],
+      exclude: ['node_modules/', './src/test-utils/setupTests.ts'],
+      all: true,
     },
   },
 });
