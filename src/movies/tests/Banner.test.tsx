@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { Banner } from '../components/Banner';
+import { Banner } from '../components/movies/Banner';
 
 describe('<Banner />', () => {
   test('renders title and subtitle correctly', () => {

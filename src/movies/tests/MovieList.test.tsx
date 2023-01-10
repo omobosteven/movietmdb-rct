@@ -4,7 +4,7 @@ import {
   screen,
   within,
 } from '../../test-utils/testing-library-utils';
-import { MovieList } from '../components/MovieList';
+import { MovieList } from '../components/movies/MovieList';
 import * as router from 'react-router';
 import userEvent from '@testing-library/user-event';
 

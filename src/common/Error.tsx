@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { pxToRem } from '../../utils/pxToRem';
+import { pxToRem } from '../utils/pxToRem';
 
 interface ErrorProps {
   message: string;

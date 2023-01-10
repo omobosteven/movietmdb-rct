@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { PageTitle } from './PageTitle';
+import { PageTitle } from '../PageTitle';
 
 export const Banner = () => {
   return (
