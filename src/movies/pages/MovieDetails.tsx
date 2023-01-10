@@ -1,22 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { getMovieDetails, MovieDetail } from '../movies.services';
+import React from 'react';
+import { getMovieDetails } from '../movies.services';
 import { useParams, Link } from 'react-router-dom';
 import { StarRating } from '../components/StarRating';
 import styled from 'styled-components';
 import { PageTitle } from '../components/PageTitle';
+import { Spinner } from '../../common/Spinner';
+import { useFetch } from '../../hooks/useFetch';
+import { Error } from '../components/Error';
 
 export const MovieDetails = () => {
-  const [movie, setMovie] = useState<MovieDetail | null>(null);
   const { movieId } = useParams();
 
-  useEffect(() => {
-    if (movieId) {
-      (async () => {
-        const movie = (await getMovieDetails(parseInt(movieId))) ?? null;
-        setMovie(movie);
-      })();
-    }
-  }, []);
+  let id;
+  if (movieId) {
+    id = parseInt(movieId);
+  }
+
+  const {
+    loading,
+    data: movie,
+    error,
+  } = useFetch(getMovieDetails, id, {
+    enabled: !!id,
+  });
 
   return (
     <section>
@@ -29,22 +35,33 @@ export const MovieDetails = () => {
           </PageTitle>
           <img src={movie?.poster} alt={movie?.title} className="img" />
         </div>
-        <div className="content">
-          <StarRating rating={movie?.rating || 0} showLabel />
-          <h2 className="title">{movie?.title}</h2>
-          <p className="text">{movie?.overview}</p>
-        </div>
+        {movie && (
+          <div className="content">
+            <StarRating rating={movie.rating} showLabel />
+            <h2 className="title">{movie.title}</h2>
+            <p className="text">{movie.overview}</p>
+          </div>
+        )}
       </Header>
-      <Body>
-        <h2 className="title">Overview</h2>
-        <p className="text">{movie?.overview}</p>
-        <a href={movie?.website || '#'} className="link">
-          Website
-        </a>
-        <p className="text">
-          <span>Status:</span> {movie?.status}
-        </p>
-      </Body>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <>
+          {error && <Error message={error} />}
+          {movie && (
+            <Body>
+              <h2 className="title">Overview</h2>
+              <p className="text">{movie.overview}</p>
+              <a href={movie.website || '#'} className="link">
+                Website
+              </a>
+              <p className="text">
+                <span>Status:</span> {movie.status}
+              </p>
+            </Body>
+          )}
+        </>
+      )}
     </section>
   );
 };

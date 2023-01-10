@@ -17,15 +17,24 @@ export const MovieList = ({ movies }: MoviesProps) => {
 
   return (
     <Movies>
-      {movies?.map((movie) => {
-        return (
-          <Movie key={movie.id} onClick={() => handleNavigateToMovie(movie.id)}>
-            <img src={movie.poster} alt={movie.title} className="img" />
-            <StarRating rating={movie.rating} />
-            <h2 className="title">{movie.title}</h2>
-          </Movie>
-        );
-      })}
+      {movies ? (
+        <>
+          {movies.map((movie) => {
+            return (
+              <Movie
+                key={movie.id}
+                onClick={() => handleNavigateToMovie(movie.id)}
+              >
+                <img src={movie.poster} alt={movie.title} className="img" />
+                <StarRating rating={movie.rating} />
+                <h2 className="title">{movie.title}</h2>
+              </Movie>
+            );
+          })}
+        </>
+      ) : (
+        <div className="empty-movies">No movies</div>
+      )}
     </Movies>
   );
 };
@@ -38,6 +47,13 @@ const Movies = styled('ul')({
   rowGap: 32,
   flexWrap: 'wrap',
   columnGap: '10%',
+
+  '& .empty-movies': {
+    margin: 'auto',
+    marginTop: 60,
+    fontSize: pxToRem(20),
+    color: '#8d8d8d',
+  },
 
   '@media screen and (min-width: 768px)': {
     columnGap: '5%',
