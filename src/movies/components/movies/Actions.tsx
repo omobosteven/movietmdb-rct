@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button } from '../../common/Button';
+import { Button } from '../../../common/Button';
 import { SearchInput } from './SearchInput';
 
 // &uarr; arrow up
@@ -20,7 +20,7 @@ export const Actions = ({ search, onSearchChange }: ActionsProps) => {
   );
 };
 
-const ActionItems = styled('section')({
+const ActionItems = styled('div')({
   marginTop: 20,
   display: 'flex',
   justifyContent: 'flex-end',

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Banner } from '../components/Banner';
-import { Actions } from '../components/Actions';
-import { MovieList } from '../components/MovieList';
+import { Banner } from '../components/movies/Banner';
+import { Actions } from '../components/movies/Actions';
+import { MovieList } from '../components/movies/MovieList';
 import { getDiscoverMovies, Movie } from '../movies.services';
 import styled from 'styled-components';
 import { Spinner } from '../../common/Spinner';
-import { Error } from '../components/Error';
+import { Error } from '../../common/Error';
 import { useFetch } from '../../hooks/useFetch';
 
 export const Movies = () => {

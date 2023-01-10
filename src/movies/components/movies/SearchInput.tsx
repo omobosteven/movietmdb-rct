@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ReactComponent as SearchIcon } from '../../assets/search.svg';
+import { ReactComponent as SearchIcon } from '../../../assets/search.svg';
 
 interface SearchInputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> {

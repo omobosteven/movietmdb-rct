@@ -1,9 +1,9 @@
 import React from 'react';
-import { Movie as MovieType } from '../movies.services';
+import { Movie as MovieType } from '../../movies.services';
 import styled from 'styled-components';
-import { pxToRem } from '../../utils/pxToRem';
+import { pxToRem } from '../../../utils/pxToRem';
 import { useNavigate } from 'react-router-dom';
-import { StarRating } from './StarRating';
+import { StarRating } from '../StarRating';
 
 interface MoviesProps {
   movies: MovieType[] | null;
@@ -43,10 +43,11 @@ const Movies = styled('ul')({
   marginTop: 42,
   listStyle: 'none',
   paddingLeft: 0,
-  display: 'flex',
+  display: 'grid',
+  gridTemplateColumns: '1fr',
+  gridTemplateRows: 'auto',
   rowGap: 32,
-  flexWrap: 'wrap',
-  columnGap: '10%',
+  columnGap: 32,
 
   '& .empty-movies': {
     margin: 'auto',
@@ -55,18 +56,28 @@ const Movies = styled('ul')({
     color: '#8d8d8d',
   },
 
-  '@media screen and (min-width: 768px)': {
-    columnGap: '5%',
+  '@media screen and (min-width: 375px)': {
+    gridTemplateColumns: 'repeat(2, 1fr)',
   },
 
-  '@media screen and (min-width: 1280px)': {
-    columnGap: '2.5%',
+  '@media screen and (min-width: 600px)': {
+    gridTemplateColumns: 'repeat(3, 1fr)',
+  },
+
+  '@media screen and (min-width: 900px)': {
+    gridTemplateColumns: 'repeat(4, 1fr)',
+  },
+
+  '@media screen and (min-width: 1200px)': {
+    gridTemplateColumns: 'repeat(5, 1fr)',
+  },
+
+  '@media screen and (min-width: 1440px)': {
+    gridTemplateColumns: 'repeat(6, 1fr)',
   },
 });
 
 const Movie = styled('li')({
-  flexBasis: '45%',
-
   '& .img': {
     width: '100%',
     height: 'auto',
@@ -79,16 +90,8 @@ const Movie = styled('li')({
     cursor: 'pointer',
 
     '&:hover': {
-      color: 'rgb(1, 180, 228)',
+      color: '#01B4E4',
       fontWeight: 500,
     },
-  },
-
-  '@media screen and (min-width: 768px)': {
-    flexBasis: '30%',
-  },
-
-  '@media screen and (min-width: 1280px)': {
-    flexBasis: '18%',
   },
 });
