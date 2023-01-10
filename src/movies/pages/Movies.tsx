@@ -4,9 +4,11 @@ import { Actions } from '../components/Actions';
 import { MovieList } from '../components/MovieList';
 import { getDiscoverMovies, Movie } from '../movies.services';
 import styled from 'styled-components';
+import { Spinner } from '../../common/Spinner';
+import { Error } from '../components/Error';
+import { useFetch } from '../../hooks/useFetch';
 
 export const Movies = () => {
-  const [movies, setMovies] = useState<Movie[] | null>(null);
   const [filteredMovies, setFilteredMovies] = useState<Movie[] | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
 
@@ -14,19 +16,15 @@ export const Movies = () => {
     setSearchQuery(value);
   };
 
-  useEffect(() => {
-    (async () => {
-      const movies = (await getDiscoverMovies()) ?? null;
-      setMovies(movies);
-    })();
-  }, []);
+  const { loading, data: movies, error } = useFetch(getDiscoverMovies);
 
   useEffect(() => {
     const filteredMovies =
       movies?.filter((movie) => {
         return movie.title.toLowerCase().includes(searchQuery.toLowerCase());
       }) || null;
-    setFilteredMovies(filteredMovies);
+    const fMovies = filteredMovies?.length ? filteredMovies : null;
+    setFilteredMovies(fMovies);
   }, [searchQuery]);
 
   return (
@@ -34,7 +32,16 @@ export const Movies = () => {
       <Banner />
       <Container>
         <Actions search={searchQuery} onSearchChange={handleSetSearchQuery} />
-        <MovieList movies={searchQuery ? filteredMovies : movies} />
+        {loading ? (
+          <Spinner />
+        ) : (
+          <>
+            {error && <Error message={error} />}
+            {movies && (
+              <MovieList movies={searchQuery ? filteredMovies : movies} />
+            )}
+          </>
+        )}
       </Container>
     </section>
   );

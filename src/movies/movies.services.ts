@@ -1,30 +1,32 @@
-import { API, API_KEY } from '../utils/Api';
+import { API, API_KEY, handleApiError } from '../utils/Api';
+import { AxiosError } from 'axios';
 
 export const getDiscoverMovies = async () => {
   try {
-    const { data: movies } = await API.get<MoviesRes>(
+    const { data } = await API.get<MoviesRes>(
       `/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`
     );
-    return deserializers.getMoviesData(movies?.results) ?? null;
+    return deserializers.getMoviesData(data?.results);
   } catch (e) {
-    console.log('error', e);
+    throw handleApiError(e as AxiosError);
   }
 };
 
-export const getMovieDetails = async (id: number) => {
+export const getMovieDetails = async (id: number | undefined) => {
   try {
+    if (!id) return null;
     const { data } = await API.get<MovieDetailRes>(
       `/movie/${id}?api_key=${API_KEY}&language=en-US`
     );
     return deserializers.getMovieDetails(data);
   } catch (e) {
-    console.log('error', e);
+    throw handleApiError(e as AxiosError);
   }
 };
 
 const deserializers = {
-  getMoviesData(data: MovieRes[]): Movie[] {
-    return data?.map((movie) => {
+  getMoviesData(data: MovieRes[]): Movie[] | null {
+    const movies = data?.map((movie) => {
       return {
         id: movie.id,
         title: movie.original_title,
@@ -32,6 +34,8 @@ const deserializers = {
         rating: movie.vote_average / 2,
       };
     });
+
+    return movies.length ? movies : null;
   },
 
   getMovieDetails(data: MovieDetailRes): MovieDetail {

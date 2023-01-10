@@ -8,10 +8,10 @@ describe('<Banner />', () => {
 
     const title = screen.getByRole('heading', { name: /movies db/i });
     const subTitle = screen.getByRole('heading', {
-      name: /yet another movies database/i,
+      name: /movies database/i,
     });
 
     expect(title).toHaveTextContent('Movies DB');
-    expect(subTitle).toHaveTextContent('Yet another movies database');
+    expect(subTitle).toHaveTextContent('Movies database');
   });
 });

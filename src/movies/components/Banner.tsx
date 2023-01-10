@@ -6,7 +6,7 @@ export const Banner = () => {
   return (
     <Header>
       <PageTitle>Movies DB</PageTitle>
-      <h3 className="sub-title">Yet another movies database.</h3>
+      <h3 className="sub-title">Movies database</h3>
     </Header>
   );
 };
