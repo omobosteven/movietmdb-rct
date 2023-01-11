@@ -14,8 +14,8 @@ interface ActionsProps {
 export const Actions = ({ search, onSearchChange }: ActionsProps) => {
   return (
     <ActionItems>
-      <Button>Sort &uarr;</Button>
-      <SearchInput value={search} onChange={onSearchChange} />
+      <Button className="sort-btn">Sort &uarr;</Button>
+      <SearchInput value={search} onChange={onSearchChange} className="input" />
     </ActionItems>
   );
 };
@@ -23,6 +23,21 @@ export const Actions = ({ search, onSearchChange }: ActionsProps) => {
 const ActionItems = styled('div')({
   marginTop: 20,
   display: 'flex',
+  flexWrap: 'wrap',
   justifyContent: 'flex-end',
   columnGap: 32,
+  rowGap: 16,
+
+  '& .sort-btn': {
+    width: '100%',
+    maxWidth: 90,
+  },
+
+  '& .input': {
+    width: '100%',
+
+    '@media screen and (min-width: 768px)': {
+      maxWidth: 320,
+    },
+  },
 });

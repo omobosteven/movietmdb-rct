@@ -1,5 +1,5 @@
 import React from 'react';
-import { MovieDetail } from '../../movies.services';
+import { MovieDetail } from '../../movies.types';
 import styled from 'styled-components';
 
 interface DetailsProps {
