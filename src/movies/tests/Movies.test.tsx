@@ -3,6 +3,7 @@ import {
   screen,
   renderWithRoute,
   waitForElementToBeRemoved,
+  waitFor,
   within,
 } from '../../test-utils/testing-library-utils';
 import userEvent from '@testing-library/user-event';
@@ -31,26 +32,34 @@ describe('<Movies />', () => {
   test('search movies returns correct result', async () => {
     renderWithRoute();
 
+    await waitForElementToBeRemoved(await screen.findByRole('progressbar'));
+
     const movieItems: HTMLLIElement[] = await screen.findAllByRole('listitem');
     const title1 = within(movieItems[0]).getByRole('heading');
     const title2 = within(movieItems[1]).getByRole('heading');
 
     expect(movieItems).toHaveLength(2);
-    expect(title1).toBeInTheDocument();
-    expect(title2).toBeInTheDocument();
+    expect(title1).toHaveTextContent('a good');
+    expect(title2).toHaveTextContent('a show');
 
     const searchInput = screen.getByRole('searchbox');
-    await userEvent.type(searchInput, 'a show');
+    await userEvent.type(searchInput, 'a great');
 
-    const movieSearchItems = await screen.findByRole('list');
-    const titleSearch1 = within(movieSearchItems).queryByRole('heading', {
-      name: /a good/i,
+    await waitFor(() => expect(title1).not.toBeInTheDocument());
+
+    const movieSearchItems: HTMLLIElement[] = await screen.findAllByRole(
+      'listitem'
+    );
+    const titleSearch1 = screen.getByRole('heading', {
+      name: /a great/i,
     });
-    const titleSearch2 = within(movieSearchItems).queryByRole('heading');
+    const titleSearch2 = screen.queryByRole('heading', {
+      name: /a show/i,
+    });
 
-    expect(await screen.findAllByRole('listitem')).toHaveLength(1);
-    expect(titleSearch1).not.toBeInTheDocument();
-    expect(titleSearch2).toBeInTheDocument();
-    expect(titleSearch2).toHaveTextContent('a show');
+    expect(movieSearchItems).toHaveLength(1);
+    expect(titleSearch1).toBeInTheDocument();
+    expect(titleSearch1).toHaveTextContent('a great');
+    expect(titleSearch2).not.toBeInTheDocument();
   });
 });

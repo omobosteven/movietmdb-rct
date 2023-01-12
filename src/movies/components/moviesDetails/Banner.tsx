@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { MovieDetail } from '../../movies.services';
+import { MovieDetail } from '../../movies.types';
 import { PageTitle } from '../PageTitle';
 import { Link } from 'react-router-dom';
 import { StarRating } from '../StarRating';

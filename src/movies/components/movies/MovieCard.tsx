@@ -29,14 +29,6 @@ const Movie = styled('li')({
   boxShadow: '0 -2px 12px #BEBDBD',
   borderRadius: 4,
 
-  '&:only-child': {
-    maxWidth: 320,
-
-    '@media screen and (min-width: 375px)': {
-      maxWidth: 200,
-    },
-  },
-
   '& .img': {
     width: '100%',
     height: 'auto',
