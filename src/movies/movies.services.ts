@@ -8,6 +8,17 @@ import {
   MovieDetail,
 } from './movies.types';
 
+export const searchMovies = async (query: string | undefined) => {
+  try {
+    if (!query) return null;
+    const { data } = await API.get<MoviesResponse>(
+      `/search/movie?api_key=${API_KEY}&language=en-US&include_adult=false&&page=1&query=${query}`
+    );
+    return deserializers.getMoviesData(data?.results);
+  } catch (e) {
+    throw handleApiError(e as AxiosError);
+  }
+};
 export const getDiscoverMovies = async () => {
   try {
     const { data } = await API.get<MoviesResponse>(

@@ -1,32 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Banner } from '../components/movies/Banner';
 import { Actions } from '../components/movies/Actions';
 import { MovieList } from '../components/movies/MovieList';
-import { getDiscoverMovies } from '../movies.services';
-import { Movie } from '../movies.types';
+import { getDiscoverMovies, searchMovies } from '../movies.services';
 import styled from 'styled-components';
 import { Spinner } from '../../common/Spinner';
 import { Error } from '../../common/Error';
 import { useFetch } from '../../hooks/useFetch';
 
 export const Movies = () => {
-  const [filteredMovies, setFilteredMovies] = useState<Movie[] | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
 
   const handleSetSearchQuery = (value: string) => {
     setSearchQuery(value);
   };
 
-  const { loading, data: movies, error } = useFetch(getDiscoverMovies);
+  const {
+    loading: dLoading,
+    data: dMovies,
+    error: dError,
+  } = useFetch(getDiscoverMovies);
 
-  useEffect(() => {
-    const filteredMovies =
-      movies?.filter((movie) => {
-        return movie.title.toLowerCase().includes(searchQuery.toLowerCase());
-      }) || null;
-    const fMovies = filteredMovies?.length ? filteredMovies : null;
-    setFilteredMovies(fMovies);
-  }, [searchQuery]);
+  const {
+    loading: sLoading,
+    data: sMovies,
+    error: sError,
+  } = useFetch(searchMovies, searchQuery, { enabled: !!searchQuery });
+
+  const loading = searchQuery ? sLoading : dLoading;
+  const movies = searchQuery ? sMovies : dMovies;
+  const error = searchQuery ? sError : dError;
 
   return (
     <section>
@@ -38,9 +41,7 @@ export const Movies = () => {
         ) : (
           <>
             {error && <Error message={error} />}
-            {movies && (
-              <MovieList movies={searchQuery ? filteredMovies : movies} />
-            )}
+            {!loading && <MovieList movies={movies} />}
           </>
         )}
       </Container>

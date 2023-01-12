@@ -1,14 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import { pxToRem } from '../../../utils/pxToRem';
+import { DebounceInput } from 'react-debounce-input';
+
 interface SearchInputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
   value: string;
   onChange: (value: string) => void;
 }
 export const SearchInput = ({ value, onChange, ...rest }: SearchInputProps) => {
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.currentTarget;
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
     onChange(value);
   };
 
@@ -20,12 +22,13 @@ export const SearchInput = ({ value, onChange, ...rest }: SearchInputProps) => {
       type="search"
       value={value}
       onChange={handleOnChange}
+      debounceTimeout={500}
       {...rest}
     />
   );
 };
 
-const Input = styled('input')({
+const Input = styled(DebounceInput)({
   border: '1px solid #BEBDBD',
   outline: 'none',
   width: '100%',

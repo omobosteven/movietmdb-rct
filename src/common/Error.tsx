@@ -3,10 +3,14 @@ import styled from 'styled-components';
 import { pxToRem } from '../utils/pxToRem';
 
 interface ErrorProps {
-  message: string;
+  message: string | null;
 }
 export const Error = ({ message }: ErrorProps) => {
-  return <StyledError>Error: {message}</StyledError>;
+  return (
+    <StyledError>
+      Error: {message ? message : 'Something went wrong'}
+    </StyledError>
+  );
 };
 
 const StyledError = styled('p')({
