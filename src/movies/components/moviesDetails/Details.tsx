@@ -32,7 +32,7 @@ const Body = styled('div')({
   },
 
   '& .link': {
-    color: '#1E1E1E',
+    color: '#01B4E4',
   },
 
   '& .text': {

@@ -8,7 +8,7 @@ export const API = axios.create({
 });
 
 export const handleApiError = (e: AxiosError) => {
-  if (process.env.NODE_ENV !== 'production') {
+  if (import.meta.env.NODE_ENV !== 'production') {
     console.warn(['API Error'], e.message || 'something went wrong', '\n', e);
   }
 

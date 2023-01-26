@@ -2,7 +2,7 @@
 - Vite
 - TypeScript
 - React Router
-- Redux*
+- React Query(not yet implemented)
 - React testing Library
 - Vitest
 - Cypress

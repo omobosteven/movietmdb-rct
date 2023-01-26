@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 interface Fetcher<TData, TParams> {
   (params?: TParams): Promise<TData>;
