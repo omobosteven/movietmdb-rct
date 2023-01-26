@@ -1,18 +1,25 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import { Banner } from '../components/movies/Banner';
 import { Actions } from '../components/movies/Actions';
 import { MovieList } from '../components/movies/MovieList';
 import { getDiscoverMovies, searchMovies } from '../movies.services';
-import styled from 'styled-components';
 import { Spinner } from '../../common/Spinner';
 import { Error } from '../../common/Error';
 import { useFetch } from '../../hooks/useFetch';
 
+const getSearchTermFromSession = () => {
+  const item = sessionStorage.getItem('searchTerm');
+  return JSON.parse(item || '');
+};
 export const Movies = () => {
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState(() =>
+    getSearchTermFromSession()
+  );
 
   const handleSetSearchQuery = (value: string) => {
     setSearchQuery(value);
+    sessionStorage.setItem('searchTerm', JSON.stringify(value));
   };
 
   const {

@@ -29,7 +29,7 @@ const Movies = styled('ul')({
   listStyle: 'none',
   paddingLeft: 0,
   display: 'grid',
-  gridTemplateColumns: `repeat(auto-fit, minmax(${pxToRem(160)}, max-content))`,
+  gridTemplateColumns: '1fr',
   gap: `${pxToRem(32)} ${pxToRem(16)}`,
 
   '& .empty-movies': {
@@ -39,15 +39,23 @@ const Movies = styled('ul')({
     color: '#8d8d8d',
   },
 
-  '@media screen and (min-width: 700px)': {
-    gridTemplateColumns: `repeat(auto-fit, minmax(${pxToRem(
-      200
-    )}, max-content))`,
+  '@media screen and (min-width: 375px)': {
+    gridTemplateColumns: 'repeat(2, 1fr)',
+  },
+
+  '@media screen and (min-width: 600px)': {
+    gridTemplateColumns: 'repeat(3, 1fr)',
+  },
+
+  '@media screen and (min-width: 900px)': {
+    gridTemplateColumns: 'repeat(4, 1fr)',
+  },
+
+  '@media screen and (min-width: 1200px)': {
+    gridTemplateColumns: 'repeat(5, 1fr)',
   },
 
   '@media screen and (min-width: 1440px)': {
-    gridTemplateColumns: `repeat(auto-fit, minmax(${pxToRem(
-      235
-    )}, max-content))`,
+    gridTemplateColumns: 'repeat(6, 1fr)',
   },
 });
