@@ -10,7 +10,12 @@ export const Details = ({ movie }: DetailsProps) => {
     <Body>
       <h2 className="title">Overview</h2>
       <p className="text">{movie.overview}</p>
-      <a href={movie.website || '#'} className="link">
+      <a
+        href={movie.website || '#'}
+        target="_blank"
+        rel="noreferrer"
+        className="link"
+      >
         Website
       </a>
       <p className="text">

@@ -17,12 +17,14 @@ export const useFetch = <TData, TParams>(
   const [data, setData] = useState<TData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleFetch = async () => {
     try {
       setLoading(true);
       const resData = await fetcher(params);
       setData(resData);
+      setIsSuccess(true);
     } catch (e) {
       setError(e as string);
     } finally {
@@ -40,8 +42,9 @@ export const useFetch = <TData, TParams>(
     return () => {
       setError(null);
       setLoading(false);
+      setIsSuccess(false);
     };
   }, [params]);
 
-  return { data, loading, error };
+  return { data, loading, error, isSuccess };
 };
