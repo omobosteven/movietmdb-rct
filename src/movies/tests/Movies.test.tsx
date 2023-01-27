@@ -1,15 +1,20 @@
-import React from 'react';
 import {
-  screen,
   renderWithRoute,
-  waitForElementToBeRemoved,
+  screen,
   waitFor,
+  waitForElementToBeRemoved,
   within,
 } from '../../test-utils/testing-library-utils';
 import userEvent from '@testing-library/user-event';
+import { server } from '../../mocks/server';
+import { rest } from 'msw';
 
 describe('<Movies />', () => {
-  test('movies component renders correctly', async () => {
+  beforeEach(() => {
+    sessionStorage.clear();
+  });
+
+  test('should render movies component correctly', async () => {
     renderWithRoute();
 
     const spinner = await screen.findByRole('progressbar');
@@ -29,7 +34,7 @@ describe('<Movies />', () => {
     expect(title2).toHaveTextContent('a show');
   });
 
-  test('search movies returns correct result', async () => {
+  test('should search movies and return correct result', async () => {
     renderWithRoute();
 
     await waitForElementToBeRemoved(await screen.findByRole('progressbar'));
@@ -45,21 +50,46 @@ describe('<Movies />', () => {
     const searchInput = screen.getByRole('searchbox');
     await userEvent.type(searchInput, 'a great');
 
-    await waitFor(() => expect(title1).not.toBeInTheDocument());
+    await waitFor(() => expect(title2).not.toBeInTheDocument());
 
     const movieSearchItems: HTMLLIElement[] = await screen.findAllByRole(
       'listitem'
     );
+    expect(movieSearchItems).toHaveLength(1);
     const titleSearch1 = screen.getByRole('heading', {
       name: /a great/i,
     });
-    const titleSearch2 = screen.queryByRole('heading', {
-      name: /a show/i,
-    });
-
-    expect(movieSearchItems).toHaveLength(1);
     expect(titleSearch1).toBeInTheDocument();
-    expect(titleSearch1).toHaveTextContent('a great');
-    expect(titleSearch2).not.toBeInTheDocument();
+  });
+
+  test('should return error if request fails', async () => {
+    server.resetHandlers(
+      rest.get(
+        'https://api.themoviedb.org/3/discover/movie',
+        (req, res, ctx) => {
+          return res(
+            ctx.status(422),
+            ctx.json({
+              errors: ['page must be less than or equal to 500'],
+              success: false,
+            })
+          );
+        }
+      )
+    );
+
+    renderWithRoute();
+
+    const spinner = await screen.findByRole('progressbar');
+    expect(spinner).toBeInTheDocument();
+
+    await waitForElementToBeRemoved(spinner);
+    expect(spinner).not.toBeInTheDocument();
+
+    const errorElement = screen.getByRole('alert');
+
+    expect(errorElement).toHaveTextContent(
+      'Error: Request failed with status code 422'
+    );
   });
 });

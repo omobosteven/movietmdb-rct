@@ -4,8 +4,9 @@ import {
   createMemoryRouter,
   RouterProvider,
 } from 'react-router-dom';
-import React from 'react';
+import React, { Suspense } from 'react';
 import { routes } from '../App';
+import { Spinner } from '../common/Spinner';
 
 const renderWithRouter = (
   ui: React.ReactElement,
@@ -19,7 +20,11 @@ const renderWithRoute = ({ route = '/' } = {}) => {
     initialEntries: [route],
   });
 
-  return render(<RouterProvider router={router} />);
+  return render(
+    <Suspense fallback={<Spinner />}>
+      <RouterProvider router={router} />
+    </Suspense>
+  );
 
   // return render(<MemoryRouter initialEntries={[route]}>{ui}</MemoryRouter>);
 };

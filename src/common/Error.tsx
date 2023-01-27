@@ -7,7 +7,7 @@ interface ErrorProps {
 }
 export const Error = ({ message }: ErrorProps) => {
   return (
-    <StyledError>
+    <StyledError role="alert">
       Error: {message ? message : 'Something went wrong'}
     </StyledError>
   );

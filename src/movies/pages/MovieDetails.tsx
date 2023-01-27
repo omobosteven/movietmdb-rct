@@ -19,6 +19,7 @@ export const MovieDetails = () => {
     loading,
     data: movie,
     error,
+    isSuccess,
   } = useFetch(getMovieDetails, id, {
     enabled: !!id,
   });
@@ -31,9 +32,11 @@ export const MovieDetails = () => {
       ) : (
         <>
           {error && <Error message={error} />}
-          {movie && <Details movie={movie} />}
+          {isSuccess && movie && <Details movie={movie} />}
         </>
       )}
     </section>
   );
 };
+
+export default MovieDetails;
